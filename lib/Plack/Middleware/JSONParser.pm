@@ -16,8 +16,10 @@ sub call {
     if ($content_type && $content_type =~
         m{\Aapplication/json}o) {
         my $req = Plack::Request->new( $env );
-        my $json = decode_json($req->raw_body());
-        $env->{'plack.request.body'} = Hash::MultiValue->from_mixed(
+        my $raw_body = $req->raw_body();
+        return $self->app->($env) unless ($raw_body);
+        my $json = decode_json($raw_body);
+        $env->{'plack.request.body'}->merge_mixed(
             $json
         );
     }
