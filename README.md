@@ -10,9 +10,6 @@ Plack::Middleware::JSONParser - It's new $module
 
 JSONParser parses json to hash multivalue object. it substitute the multivalue object for "plack.request.body" when content-type is 'application/json' and request body has JSON.
 
-Most client side MVC frameworks use RESTFul requests.
-However Plack cannot handle the JSON in content body as Perl object.
-
 # LICENSE
 
 Copyright (C) Yosuke Furukawa.
@@ -22,4 +19,4 @@ it under the same terms as Perl itself.
 
 # AUTHOR
 
-Yosuke Furukawa
+Yosuke Furukawa <yosuke.furukawa@gmail.com>
