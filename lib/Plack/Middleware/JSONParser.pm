@@ -27,10 +27,16 @@ sub call {
             $env->{'plack.middleware.jsonparser.error'} = $@;
           }
         }
-        $env->{'plack.request.body'}->merge_mixed(
+        if ($env->{'plack.request.body'}) {
+          $env->{'plack.request.body'}->merge_mixed(
             $json
-        );
-    }
+          );
+        } else {
+          $env->{'plack.request.body'} = Hash::MultiValue->from_mixed(
+            $json
+          );
+        }
+      }
     $self->app->($env);
 }
 
