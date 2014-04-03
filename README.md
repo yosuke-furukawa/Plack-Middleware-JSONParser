@@ -22,4 +22,4 @@ it under the same terms as Perl itself.
 
 # AUTHOR
 
-Yosuke Furukawa <furukawa.yosuke@dena.jp>
+Yosuke Furukawa

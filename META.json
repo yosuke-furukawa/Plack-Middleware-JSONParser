@@ -1,7 +1,7 @@
 {
    "abstract" : "It's new $module",
    "author" : [
-      "Yosuke Furukawa <furukawa.yosuke@dena.jp>"
+      "Yosuke Furukawa <yosuke.furukawa@gmail.com>"
    ],
    "dynamic_config" : 0,
    "generated_by" : "Minilla/v0.12.0, CPAN::Meta::Converter version 2.120921",
@@ -43,7 +43,10 @@
       },
       "runtime" : {
          "requires" : {
-            "perl" : "5.008005"
+            "Hash::MultiValue" : "0",
+            "Plack::Middleware" : "0",
+            "Plack::Request" : "0",
+            "perl" : "5.008001"
          }
       },
       "test" : {
@@ -53,5 +56,11 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/yosuke-furukawa/Plack-Middleware-JSONParser.git"
+      }
+   },
    "version" : "0.01"
 }

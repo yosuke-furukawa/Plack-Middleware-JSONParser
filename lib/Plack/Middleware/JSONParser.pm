@@ -60,7 +60,7 @@ it under the same terms as Perl itself.
 
 =head1 AUTHOR
 
-Yosuke Furukawa E<lt>furukawa.yosuke@dena.jpE<gt>
+Yosuke Furukawa E<lt>yosuke.furukawa@gmail.comE<gt>
 
 =cut
 
