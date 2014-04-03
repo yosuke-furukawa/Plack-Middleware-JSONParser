@@ -67,7 +67,7 @@
          "web" : "https://github.com/yosuke-furukawa/Plack-Middleware-JSONParser"
       }
    },
-   "version" : "0.01",
+   "version" : "0.02",
    "x_contributors" : [
       "Yosuke Furukawa <furukawa.yosuke@dena.jp>"
    ]

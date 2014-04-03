@@ -5,7 +5,7 @@ use JSON;
 use Hash::MultiValue;
 use Plack::Request;
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 use parent 'Plack::Middleware';
 
