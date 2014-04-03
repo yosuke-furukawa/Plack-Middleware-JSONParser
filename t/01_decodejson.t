@@ -7,9 +7,16 @@ use Plack::Middleware::JSONParser;
 use HTTP::Request::Common;
 
 my $parsed_request;
+my $error;
 my $app = sub {
     my $env = shift;
-    [200, ['Content-Type' => 'text/plain'], [$parsed_request = Plack::Request->new($env)]];
+    [ 200, 
+      ['Content-Type' => 'text/plain'], 
+      [
+        $error = $env->{'plack.middleware.jsonparser.error'},
+        $parsed_request = Plack::Request->new($env),
+      ]
+    ];
 };
 $app = Plack::Middleware::JSONParser->wrap($app);
 
@@ -56,6 +63,7 @@ test_psgi $app, sub {
   $cb->($req);
   is $parsed_request->param('test3'), 123;
   is $parsed_request->param('test4'), "abc";
+  like $error, qr/malformed JSON/;
 };
 
 done_testing;

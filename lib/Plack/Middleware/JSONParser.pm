@@ -18,7 +18,15 @@ sub call {
         my $req = Plack::Request->new( $env );
         my $raw_body = $req->raw_body();
         return $self->app->($env) unless ($raw_body);
-        my $json = decode_json($raw_body);
+        my $json;
+        {
+          local $@;
+          $json = eval { decode_json($raw_body) };
+          if ($@) {
+            die $@ if $self->{die_when_failed};
+            $env->{'plack.middleware.jsonparser.error'} = $@;
+          }
+        }
         $env->{'plack.request.body'}->merge_mixed(
             $json
         );
