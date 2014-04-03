@@ -1,10 +1,8 @@
 package Plack::Middleware::JSONParser;
-use 5.008005;
 use strict;
 use warnings;
 use JSON;
 use Hash::MultiValue;
-use Data::Dumper;
 use Plack::Request;
 
 our $VERSION = "0.01";
@@ -16,15 +14,24 @@ sub call {
 
     my $content_type = $env->{'CONTENT_TYPE'};
     if ($content_type && $content_type =~
-        m{\Aapplication/json(;\s*charset=(utf|UTF)-?8)?\z}o) {
+        m{\Aapplication/json}o) {
         my $req = Plack::Request->new( $env );
-        my $json = decode_json($req->raw_body());
-        $env->{'plack.request.body'} = Hash::MultiValue->from_mixed(
+        my $raw_body = $req->raw_body();
+        return $self->app->($env) unless ($raw_body);
+        my $json;
+        {
+          local $@;
+          $json = eval { decode_json($raw_body) };
+          if ($@) {
+            die $@ if $self->{die_when_failed};
+            $env->{'plack.middleware.jsonparser.error'} = $@;
+          }
+        }
+        $env->{'plack.request.body'}->merge_mixed(
             $json
         );
     }
-
-    return $self->app->($env);
+    $self->app->($env);
 }
 
 1;
@@ -42,7 +49,7 @@ Plack::Middleware::JSONParser - It's new $module
 
 =head1 DESCRIPTION
 
-Plack::Middleware::JSONParser is ...
+JSONParser parses json to hash multivalue object. it substitute the multivalue object for "plack.request.body" when content-type is 'application/json' and request body has JSON.
 
 =head1 LICENSE
 
